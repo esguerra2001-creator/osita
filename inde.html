@@ -1,0 +1,561 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mi Osita ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #090015;
+    color: white;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#estrellas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 20% 20%,
+            rgba(130, 30, 180, .3), transparent 45%),
+        radial-gradient(ellipse at 80% 80%,
+            rgba(255, 30, 140, .2), transparent 45%),
+        linear-gradient(160deg, #100024, #080019, #170025);
+}
+
+.luz {
+    position: fixed;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .4;
+    background: #9b26ff;
+    animation: luzMover 9s ease-in-out infinite alternate;
+}
+
+.luz.uno {
+    top: 5%;
+    left: -100px;
+}
+
+.luz.dos {
+    right: -100px;
+    bottom: 5%;
+    background: #ff268f;
+    animation-delay: -4s;
+}
+
+@keyframes luzMover {
+    from { transform: translate(0, 0); }
+    to { transform: translate(100px, 70px); }
+}
+
+.contenido {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.portada {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 22px;
+}
+
+.etiqueta {
+    color: #ffc3e7;
+    letter-spacing: 4px;
+    font-size: 11px;
+    margin-bottom: 25px;
+    animation: aparecer 2s ease;
+}
+
+h1 {
+    font-size: clamp(48px, 10vw, 95px);
+    line-height: 1.1;
+    background: linear-gradient(
+        90deg, #fff, #ff9cdd, #d7a5ff, #fff
+    );
+    background-size: 250% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(255, 75, 200, .45));
+    animation: brillo 5s linear infinite;
+}
+
+@keyframes brillo {
+    to { background-position: 250% center; }
+}
+
+.subtitulo {
+    max-width: 600px;
+    margin: 22px auto;
+    font-size: 17px;
+    line-height: 1.9;
+    color: #e5d7f8;
+}
+
+.osito {
+    font-size: clamp(80px, 15vw, 135px);
+    margin: 15px 0;
+    display: inline-block;
+    filter: drop-shadow(0 0 25px rgba(255, 105, 180, .5));
+    animation: abrazo 2s ease-in-out infinite;
+}
+
+@keyframes abrazo {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-12px) rotate(4deg); }
+}
+
+.boton {
+    padding: 16px 28px;
+    margin: 12px 6px;
+    border: 1px solid #ff91d5;
+    border-radius: 40px;
+    background: linear-gradient(100deg, #a21caf, #ec4899);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(236, 72, 153, .35);
+    transition: .3s;
+}
+
+.boton:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 0 35px rgba(255, 100, 210, .7);
+}
+
+.indicacion {
+    color: #bdacd6;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-top: 35px;
+}
+
+.seccion {
+    padding: 90px 22px;
+    text-align: center;
+}
+
+h2 {
+    font-size: clamp(30px, 6vw, 48px);
+    color: #ffc1e6;
+    text-shadow: 0 0 20px rgba(255, 50, 170, .3);
+    margin-bottom: 25px;
+}
+
+.texto {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 17px;
+    line-height: 2;
+    color: #e4d7f5;
+}
+
+.tarjeta {
+    max-width: 700px;
+    margin: 35px auto 0;
+    padding: 35px 28px;
+    border: 1px solid rgba(255, 155, 220, .35);
+    border-radius: 25px;
+    background: rgba(70, 20, 90, .25);
+    box-shadow: 0 0 50px rgba(160, 40, 180, .1);
+    backdrop-filter: blur(8px);
+}
+
+.tarjeta p {
+    line-height: 2;
+    color: #f7e8ff;
+    font-size: 16px;
+}
+
+.carta {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 150, 220, .25);
+    display: none;
+    animation: aparecer 1s ease;
+}
+
+.carta.abierta {
+    display: block;
+}
+
+.carta p {
+    line-height: 2;
+    color: #ffe5f5;
+    font-size: 17px;
+    white-space: pre-line;
+}
+
+.firma {
+    margin-top: 25px;
+    color: #ff9edb;
+    font-size: 19px;
+    font-style: italic;
+}
+
+.corazon-grande {
+    font-size: 70px;
+    margin: 25px 0;
+    animation: latido 1.2s infinite;
+    filter: drop-shadow(0 0 20px #ff278f);
+}
+
+@keyframes latido {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.pie {
+    position: relative;
+    z-index: 2;
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 150, 220, .15);
+    color: #bca8d2;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.corazon-flotante {
+    position: fixed;
+    bottom: -40px;
+    z-index: 1;
+    pointer-events: none;
+    animation: subir linear forwards;
+    opacity: .8;
+}
+
+@keyframes subir {
+    0% {
+        transform: translateY(0) rotate(0);
+        opacity: 0;
+    }
+    15% { opacity: .9; }
+    100% {
+        transform: translateY(-115vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="fondo"></div>
+<div class="luz uno"></div>
+<div class="luz dos"></div>
+
+<canvas id="estrellas"></canvas>
+
+<main class="contenido">
+
+    <section class="portada">
+
+        <div class="etiqueta">
+            ✨ UNA DEDICATORIA DESDE EL CORAZÓN ✨
+        </div>
+
+        <h1>Mi Osita 🐻</h1>
+
+        <div class="osito">🧸💗</div>
+
+        <p class="subtitulo">
+            Entre millones de estrellas y un universo infinito,
+            hay una persona que ocupa un lugar muy especial
+            en mi corazón... y esa persona eres tú. ❤️
+        </p>
+
+        <button class="boton" onclick="irACarta()">
+            💌 Tengo algo para ti
+        </button>
+
+        <div class="indicacion">
+            DESLIZA Y DESCUBRE TU SORPRESA ♥
+        </div>
+
+    </section>
+
+    <section class="seccion">
+
+        <h2>Para ti, mi Osita ❤️</h2>
+
+        <div class="tarjeta">
+            <div style="font-size:45px; margin-bottom:20px;">
+                🌙✨🌹
+            </div>
+
+            <p>
+                Si pudiera regalarte algo en esta vida,
+                te regalaría la capacidad de verte a través
+                de mis ojos, porque así comprenderías
+                lo especial que eres para mí.
+                <br><br>
+                No existe una estrella que brille más que
+                la felicidad que siento cuando pienso en ti.
+                Eres una personita que hace más bonito
+                mi mundo y que tiene un lugar muy especial
+                dentro de mi corazón.
+                <br><br>
+                Esta galaxia es inmensa, pero mi cariño
+                por ti tiene un lugar que no se puede medir.
+                💖
+            </p>
+        </div>
+
+    </section>
+
+    <section class="seccion" id="seccionCarta">
+
+        <h2>Una cartita para ti 💌</h2>
+
+        <p class="texto">
+            Preparé estas palabras con mucho cariño.
+            Presiona el botón para abrir tu pequeña sorpresa.
+        </p>
+
+        <button class="boton" id="botonCarta" onclick="abrirCarta()">
+            💗 Abrir mi carta
+        </button>
+
+        <div class="carta" id="carta">
+
+            <p>Mi querida Osita: 🐻❤️
+
+Quiero que sepas que eres una persona muy especial para mí.
+A veces las palabras no alcanzan para explicar lo que uno
+lleva en el corazón, pero hoy quiero intentarlo.
+
+Me gusta saber que existes, pensar en ti y sonreír
+cuando recuerdo esos pequeños detalles que te hacen única.
+
+No sé qué sorpresas nos tenga preparada la vida,
+pero sí sé que quería regalarte este pequeño detalle
+para sacarte una sonrisa y recordarte lo mucho que te quiero.
+
+Si las estrellas pudieran hablar, les pediría que te
+recordaran cada noche lo valiosa, hermosa y especial
+que eres.
+
+Y si el universo tuviera un rincón reservado para mis
+pensamientos más bonitos, seguramente estaría lleno
+de recuerdos tuyos.
+
+Gracias por existir, mi Osita.
+Nunca olvides lo maravillosa que eres. 💖
+
+Esta galaxia lleva tu nombre en mi imaginación,
+y cada estrella guarda un poquito del cariño
+que siento por ti. ✨</p>
+
+            <div class="firma">
+                Con mucho cariño, para mi Osita. ❤️
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="seccion">
+
+        <div class="corazon-grande">❤️</div>
+
+        <h2>Mi lugar favorito</h2>
+
+        <p class="texto">
+            No importa qué tan grande sea el universo,
+            siempre habrá personas que convierten
+            un instante sencillo en un recuerdo hermoso.
+            <br><br>
+            Tú eres una de esas personas para mí,
+            mi Osita. 🐻💕
+        </p>
+
+        <button class="boton" onclick="lluviaDeAmor()">
+            💖 Enviar lluvia de corazones
+        </button>
+
+    </section>
+
+    <footer class="pie">
+        HECHO CON MUCHO CARIÑO PARA MI OSITA 🐻<br>
+        ENTRE MILLONES DE ESTRELLAS, ESTA DEDICATORIA ES PARA TI. ❤️
+    </footer>
+
+</main>
+
+<script>
+const canvas = document.getElementById("estrellas");
+const ctx = canvas.getContext("2d");
+
+let ancho, alto;
+let estrellas = [];
+
+function ajustarPantalla() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    ancho = window.innerWidth;
+    alto = window.innerHeight;
+
+    canvas.width = ancho * dpr;
+    canvas.height = alto * dpr;
+
+    canvas.style.width = ancho + "px";
+    canvas.style.height = alto + "px";
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    estrellas = [];
+
+    const cantidad = Math.min(
+        300,
+        Math.floor((ancho * alto) / 3000)
+    );
+
+    for (let i = 0; i < cantidad; i++) {
+        estrellas.push({
+            x: Math.random() * ancho,
+            y: Math.random() * alto,
+            radio: Math.random() * 1.7 + 0.3,
+            brillo: Math.random(),
+            velocidad: Math.random() * 0.4 + 0.1
+        });
+    }
+}
+
+function animarEstrellas() {
+    ctx.clearRect(0, 0, ancho, alto);
+
+    for (const estrella of estrellas) {
+        estrella.y += estrella.velocidad;
+
+        if (estrella.y > alto) {
+            estrella.y = 0;
+            estrella.x = Math.random() * ancho;
+        }
+
+        const brillo =
+            0.4 + Math.sin(Date.now() * 0.001 + estrella.brillo * 8) * 0.4;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            estrella.x,
+            estrella.y,
+            estrella.radio,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle = `rgba(255,220,255,${brillo})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = "#e5aaff";
+        ctx.fill();
+    }
+
+    ctx.shadowBlur = 0;
+
+    requestAnimationFrame(animarEstrellas);
+}
+
+function crearCorazon() {
+    const corazon = document.createElement("div");
+    const simbolos = ["❤️", "💗", "💖", "💕", "💘", "✨"];
+
+    corazon.className = "corazon-flotante";
+
+    corazon.textContent =
+        simbolos[Math.floor(Math.random() * simbolos.length)];
+
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (16 + Math.random() * 25) + "px";
+    corazon.style.animationDuration = (6 + Math.random() * 6) + "s";
+
+    document.body.appendChild(corazon);
+
+    setTimeout(() => corazon.remove(), 12000);
+}
+
+function lluviaDeAmor() {
+    for (let i = 0; i < 35; i++) {
+        setTimeout(crearCorazon, i * 100);
+    }
+}
+
+function irACarta() {
+    document.getElementById("seccionCarta").scrollIntoView({
+        behavior: "smooth"
+    });
+
+    setTimeout(abrirCarta, 700);
+}
+
+function abrirCarta() {
+    const carta = document.getElementById("carta");
+    const boton = document.getElementById("botonCarta");
+
+    carta.classList.toggle("abierta");
+
+    if (carta.classList.contains("abierta")) {
+        boton.textContent = "💌 Cerrar mi carta";
+        lluviaDeAmor();
+    } else {
+        boton.textContent = "💗 Abrir mi carta";
+    }
+}
+
+window.addEventListener("resize", ajustarPantalla);
+
+ajustarPantalla();
+animarEstrellas();
+
+setInterval(crearCorazon, 650);
+</script>
+
+</body>
+</html>
+```
